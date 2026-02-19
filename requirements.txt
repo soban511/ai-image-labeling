@@ -1,0 +1,8 @@
+torch
+torchvision
+transformers
+open_clip_torch
+spacy
+opencv-python
+Pillow
+streamlit
