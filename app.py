@@ -28,10 +28,18 @@ if uploaded_file:
     st.write(results["caption"])
 
     st.subheader("Extracted Phrases")
-    st.write(results["phrases"])
+    if results["phrases"]:
+        for i, phrase in enumerate(results["phrases"]):
+            st.write(f"{i+1}. {phrase}")
+    else:
+        st.write("No phrases extracted.")
 
     st.subheader("Best Label")
     st.write(results["best_label"])
 
-    st.subheader("Phrase Rankings")
-    st.write(results["ranking"])
+    st.subheader("Extracted Phrases")
+    if results["phrases"]:
+        for i, phrase in enumerate(results["phrases"]):
+            st.write(f"{i+1}. {phrase}")
+    else:
+        st.write("No phrases extracted.")
