@@ -3,6 +3,12 @@ torchvision
 transformers
 open_clip_torch
 spacy
-opencv-python
+opencv-python-headless
 Pillow
 streamlit
+rembg[CPU]
+scikit-learn
+numpy
+pandas
+matplotlib
+seaborn
