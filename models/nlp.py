@@ -1,7 +1,7 @@
 import spacy
 import os
 
-SPACY_PATH = os.path.join("models", "spacy", "en_core_web_sm")
+SPACY_PATH = os.path.join("models", "spacy", "en_core_web_sm", "en_core_web_sm-3.8.0")
 
 nlp = spacy.load(SPACY_PATH)
 
