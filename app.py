@@ -37,9 +37,9 @@ if uploaded_file:
     st.subheader("Best Label")
     st.write(results["best_label"])
 
-    st.subheader("Extracted Phrases")
-    if results["phrases"]:
-        for i, phrase in enumerate(results["phrases"]):
-            st.write(f"{i+1}. {phrase}")
+    st.subheader("Phrase Rankings")
+    if results["ranking"]:
+        for i, (phrase, score) in enumerate(results["ranking"]):
+            st.write(f"{i+1}. {phrase} → Score: {float(score):.4f}")
     else:
-        st.write("No phrases extracted.")
+        st.write("No ranking available.")
