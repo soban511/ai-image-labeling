@@ -63,11 +63,19 @@ from rembg import remove
 from PIL import Image
 import numpy as np
 import io
-import matplotlib.pyplot as plt
 
 
-def segment_and_crop(image_path):
-    # Read original image
+def segment_and_crop(image_path, debug=False):
+    """
+    Removes background using rembg,
+    finds bounding box from mask,
+    crops region from ORIGINAL image.
+
+    Returns:
+        cropped_original (numpy array)
+    """
+
+    # Load original image
     original = Image.open(image_path).convert("RGB")
     original_np = np.array(original)
 
@@ -77,11 +85,11 @@ def segment_and_crop(image_path):
 
     output_bytes = remove(input_bytes)
 
-    # Load RGBA result to get mask
+    # Get RGBA output to extract mask
     rgba_image = Image.open(io.BytesIO(output_bytes)).convert("RGBA")
     rgba_np = np.array(rgba_image)
 
-    # Extract alpha mask
+    # Extract alpha channel as mask
     alpha = rgba_np[:, :, 3]
 
     coords = np.column_stack(np.where(alpha > 0))
@@ -91,32 +99,13 @@ def segment_and_crop(image_path):
     y0, x0 = coords.min(axis=0)
     y1, x1 = coords.max(axis=0)
 
-    # 🔥 Crop FROM ORIGINAL IMAGE (not rgba image)
+    # Crop from ORIGINAL image
     cropped_original = original_np[y0:y1, x0:x1]
 
-    return original_np, alpha, cropped_original
+    if debug:
+        print("Original shape:", original_np.shape)
+        print("Mask shape:", alpha.shape)
+        print("Bounding box:", (y0, x0, y1, x1))
+        print("Cropped shape:", cropped_original.shape)
 
-
-# Run segmentation
-original_img, mask_img, cropped_img = segment_and_crop("/content/temp2.jpg")
-
-
-# Display results
-plt.figure(figsize=(15,5))
-
-plt.subplot(1,3,1)
-plt.title("Original Image")
-plt.imshow(original_img)
-plt.axis("off")
-
-plt.subplot(1,3,2)
-plt.title("Foreground Mask")
-plt.imshow(mask_img, cmap="gray")
-plt.axis("off")
-
-plt.subplot(1,3,3)
-plt.title("Cropped From Original")
-plt.imshow(cropped_img)
-plt.axis("off")
-
-plt.show()
+    return cropped_original
