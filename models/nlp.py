@@ -1,6 +1,9 @@
 import spacy
+import os
 
-nlp = spacy.load("en_core_web_sm")
+SPACY_PATH = os.path.join("models", "spacy", "en_core_web_sm")
+
+nlp = spacy.load(SPACY_PATH)
 
 
 def extract_noun_phrases(caption):
