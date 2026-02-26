@@ -27,5 +27,11 @@ if uploaded_file:
     st.subheader("Generated Caption")
     st.write(results["caption"])
 
+    st.subheader("Extracted Phrases")
+    st.write(results["phrases"])
+
     st.subheader("Best Label")
     st.write(results["best_label"])
+
+    st.subheader("Phrase Rankings")
+    st.write(results["ranking"])
